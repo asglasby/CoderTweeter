@@ -1,11 +1,10 @@
 ﻿// https://codercamptweeter.firebaseio.com/
 
-//var tweet = {
-//    name: "Aisha",
-//    message: "I'm getting this tweet thing going!  Woohoo!"
-//}
-
-var tweet = document.getElementById().value + 
+var tweet = {
+    name: "Aisha",
+    message: "I'm getting this tweet thing going!  Woohoo!"
+}
+//var tweet = document.getElementById().value + 
 
 myurl = "https://codercamptweeter.firebaseio.com/.json";
 var request = new XMLHttpRequest();
