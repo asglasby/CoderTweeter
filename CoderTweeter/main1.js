@@ -28,63 +28,62 @@
       
 
 */
-
-
-
-
-var tweet = document.getElementById().value + 
+//var tweet = document.getElementById().value + 
 var tweet = {
     name: "Aisha",
-    message: "I'm getting this tweet thing going!  Woohoo!"
+    message: "I'm Working with Kyle and Christi!"
 }
 //var tweet = document.getElementById().value + 
 
 myurl = "https://codercamptweeter.firebaseio.com/.json";
-var request = new XMLHttpRequest();
-
-
-////GET  REQUEST///////////////////////////////////////////////////////////////////////////////////////////Sample GET REQUEST
-var request = new XMLHttpRequest();
-request.open("GET", myurl, true); // Post will send the information to firebase
-
-//the onload is what we want to happen when the request comes base from firebase.
-
 var keyHolder = [];
-request.onload = function (event) {
-    if (this.status >= 200 && this.status < 400) {
-        //this is what happens when our request is successfullater.
-        var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
-        //console.log(data);
-        //This is what we want to happen when the request is successful.
-        //document.getElementById("container").innerHTML = JSON.stringify(data);  // we need to unpack the data that's inside of an object or array.
-       
-        for (var propName in data) {
-            document.getElementById("container").innerHTML += propName + "<br />";
-            keyHolder.push(propName);
-            
+
+var getTweets = function () {
+    var request = new XMLHttpRequest();
+    request.open("GET", myurl, true); // Post will send the information to firebase
+
+    //the onload is what we want to happen when the request comes base from firebase.
+
+
+    request.onload = function (event) {
+        if (this.status >= 200 && this.status < 400) {
+            //this is what happens when our request is successfullater.
+            var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
+            //console.log(data);
+            //This is what we want to happen when the request is successful.
+            //document.getElementById("container").innerHTML = JSON.stringify(data);  // we need to unpack the data that's inside of an object or array.
+
+            //for (var propName in data) {
+            //    document.getElementById("container").innerHTML += propName + "<br />";
+            //    keyHolder.push(propName);
+
+            //}
+            //alert(keyHolder);
+
+            for (var propName in data) {
+                document.getElementById("container").innerHTML +=
+                data[propName]["name"] + ':' + data[propName]["message"] + "<br />";
+            }
+
+
+        } else {
+            //this is was happens when the request fails
+            console.log(this.response);
         }
-        //alert(keyHolder);
-
-        //for (var propName in data) {
-        //    document.getElementById("container").innerHTML +=
-        //    data[propName]["name"] + ':' + data[propName]["message"] + "<br />";
-        //}
-
-
-    } else {
-        //this is was happens when the request fails
-        console.log(this.response);
+    };
+    // This lets us know what to do when an error occured.  Either you or the server is offline.
+    request.onerror = function () {
+        //This on error is for when the connection fails
+        console.log("Whoops, connection failed!");
     }
+    request.send();//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+
 };
-// This lets us know what to do when an error occured.  Either you or the server is offline.
-request.onerror = function () {
-    //This on error is for when the connection fails
-    console.log("Whoops, connection failed!");
-}
-request.send();//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+
 
 
 var sendTweet = function () {
+    var request = new XMLHttpRequest();
     request.open("POST", myurl, true); // Post will send the information to firebase
 
     //the onload is what we want to happen when the request comes base from firebase.
