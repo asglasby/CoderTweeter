@@ -21,11 +21,13 @@
 
     Functions 
         1. Follow method
-        2. tweet method
-        3. Login method - made an initial log in method
+        2. tweet method - works
+        3. Login method - works
+        4. sign up method - works
         4. retweet
         5. Somewhere, use a prototype
-      
+     
+     still to do- follow, retweet, filter tweets
 
 */
 //var tweet = document.getElementById().value + 
@@ -80,6 +82,7 @@ document.getElementById("message").className = "hide";
 document.getElementById("tweetButton").className = "hide";
 document.getElementById("tweetList").className = "hide";
 
+//
 var showHomePage = function () {
     var found = false;
     userName = document.getElementById("name").value;
@@ -139,10 +142,12 @@ var getTweets = function () {
             //alert(keyHolder);
 
             for (var propName in data) {
-                document.getElementById("container").innerHTML +=
-                data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";
-                data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
-                keyHolder.push(propName["userName"], propName["message"]);
+                if (data[propName]["userName"] === userName) {
+                    document.getElementById("container").innerHTML =
+                    data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
+                    keyHolder.push(propName["userName"], propName["message"]);
+                }
             }
         } else {
             //this is was happens when the request fails
