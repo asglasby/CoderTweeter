@@ -29,6 +29,40 @@
 
 */
 //var tweet = document.getElementById().value + 
+
+//An array meant to hold all the usernames for our app 
+var allUsers = [];
+allUsers.push("Kyle");
+allUsers.push("Aisha");
+allUsers.push("Christi");
+
+// id's I need to hide- followButton, message, tweetButton, tweetList
+document.getElementById("followButton").className = "hide";
+document.getElementById("message").className = "hide";
+document.getElementById("tweetButton").className = "hide";
+document.getElementById("tweetList").className = "hide";
+
+var showHomePage = function () {
+
+    var found = false;
+    var userName = document.getElementById("name").value;
+        for (var i = 0; i < allUsers.length; i++) {
+            if (userName === allUsers[i]) {
+                document.getElementById("followButton").className = "";
+                document.getElementById("message").className = "";
+                document.getElementById("tweetButton").className = "";
+                document.getElementById("tweetList").className = "";
+
+                document.getElementById("name").className = "hide";
+                document.getElementById("loginButton").className = "hide";
+                found = true;
+            }
+        }
+        if (found === false) {
+            document.getElementById("contentWrapper").innerHTML += "<p>That account could not be found. Sign up if you have not made an account!</p>";
+        }
+};
+
 var tweet = {
     name: "Aisha",
     message: "I'm Working with Kyle and Christi!"

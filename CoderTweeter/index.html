@@ -6,13 +6,14 @@
     
 </head>
 <body>
-    <h1>Aisha's Coder Camp Tweeter Application</h1><button onclick="follow();">Follow</button>
-    <div>
+    <h1 >Aisha, Christi, and Kyle's Coder Camp Tweeter Application</h1><button id="followButton" onclick="follow();">Follow</button>
+    <div id="contentWrapper">
         <input id="name" placeholder="Enter your name or Sign In" />
+        <button id="loginButton" onclick="showHomePage()">Log in</button>
         <textarea id="message" placeholder="Enter your tweet here"></textarea>
-        <button onclick="sendTweet();">Send Tweet</button>
+        <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
     </div>
-    <h2>My Tweets from Coder Camp Tweeter Server</h2>
+    <h2 id="tweetList">My Tweets from Coder Camp Tweeter Server</h2>
     <p id="container"></p>
     <script src="main1.js"></script>
 </body>
