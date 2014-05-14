@@ -31,10 +31,45 @@
 //var tweet = document.getElementById().value + 
 
 //An array meant to hold all the usernames for our app. Right now its holding strings, I need to change that to objects. 
+/*
 var allUsers = [];
-allUsers.push("Kyle");
-allUsers.push("Aisha");
-allUsers.push("Christi");
+
+var Kyle = {
+    name: "Kyle"
+};
+var Aisha = {
+    name: "Aisha""
+};
+var Christi = {
+    name: "Christi"
+};
+
+allUsers.push(Kyle, Aisha, Christi);
+*/
+var allUsers = [];
+var Kyle = {
+    name: "Kyle"
+};
+var Aisha = {
+    name: "Aisha"
+};
+var Christi = {
+    name: "Christi"
+};
+
+allUsers.push(Kyle, Aisha, Christi)
+
+
+//create a user constructor that will create users as objects
+var createUser = function (name) {
+    this.name = name;
+};
+
+//create a signup function that calls the createUser constructor and pushes it to the array
+var signUp = function () {
+    allUsers.push(createUser(document.getElementById("signUpName").value));
+};
+var userName;
 
 
 
@@ -48,21 +83,24 @@ document.getElementById("tweetList").className = "hide";
 var showHomePage = function () {
 
     var found = false;
-    var userName = document.getElementById("name").value;
+    userName = document.getElementById("name").value;
         for (var i = 0; i < allUsers.length; i++) {
-            if (userName === allUsers[i]) {
+            if (userName === allUsers[i]["name"]) {
+                document.getElementById("header").innerHTML = "Welcome to your tweeter, " + userName + "";
                 document.getElementById("followButton").className = "";
                 document.getElementById("message").className = "";
                 document.getElementById("tweetButton").className = "";
                 document.getElementById("tweetList").className = "";
 
-                document.getElementById("name").className = "hide";
-                document.getElementById("loginButton").className = "hide";
+                var startElements = document.getElementsByClassName("startPage");
+                for (var i = 0; i < startElements.length; i++) {
+                    startElements[i].style.display = "none";
+                }
                 found = true;
             }
         }
         if (found === false) {
-            document.getElementById("contentWrapper").innerHTML += "<p>That account could not be found. Sign up if you have not made an account!</p>";
+            document.getElementById("contentWrapper").innerHTML += "<p class='startPage'>That account could not be found. Sign up if you have not made an account!</p>";
         }
 };
 
