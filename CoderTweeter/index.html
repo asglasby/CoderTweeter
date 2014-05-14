@@ -1,9 +1,19 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title></title>
+    <title>Coder Camp Tweeter Application</title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    
 </head>
 <body>
-
+    <h1>Aisha's Coder Camp Tweeter Application</h1><button onclick="follow();">Follow</button>
+    <div>
+        <input id="name" placeholder="Enter your name or Sign In" />
+        <textarea id="message" placeholder="Enter your tweet here"></textarea>
+        <button onclick="sendTweet();">Send Tweet</button>
+    </div>
+    <h2>My Tweets from Coder Camp Tweeter Server</h2>
+    <p id="container"></p>
+    <script src="main1.js"></script>
 </body>
 </html>
