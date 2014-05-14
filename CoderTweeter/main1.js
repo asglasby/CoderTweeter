@@ -104,31 +104,26 @@ var showHomePage = function () {
         }
 };
 
-var tweet = {
-    name: "Aisha",
-    message: "I'm Working with Kyle and Christi!"
-}
+//var tweet = {
+//    name: "Aisha",
+//    message: "I'm Working with Kyle and Christi!"
+//}
 //var tweet = document.getElementById().value + 
 
 myurl = "https://codercamptweeter.firebaseio.com/.json";
 var keyHolder = [];
 
-
+var NewTweet = function (userName, message) {
+    this["username"] = userName;
+    this["message"] = message;
+};
 
 
 
 var getTweets = function () {
     
-
-
-
-
     var request = new XMLHttpRequest();
-
-
-
-
-
+    
     request.open("GET", myurl, true); // Post will send the information to firebase
     //the onload is what we want to happen when the request comes base from firebase.
     request.onload = function (event) {
@@ -148,6 +143,7 @@ var getTweets = function () {
 
             for (var propName in data) {
                 document.getElementById("container").innerHTML +=
+                data[propName]["name"] + ':' + data[propName]["message"] +  "<br />";
                 data[propName]["name"] + ':' + data[propName]["message"] + "<br />";
                 keyHolder.push(propName["name"], propName["message"]);
             }
@@ -172,7 +168,11 @@ var getTweets = function () {
 };
 
 var sendTweet = function () {
-    tweet = document.getElementById("message").value;
+    //username = this.username;
+    message = document.getElementById("message").value;
+    var tweet = NewTweet(userName, message);
+
+//    tweet = document.getElementById("message").value;
     var request = new XMLHttpRequest();
     request.open("POST", myurl, true); // Post will send the information to firebase
 
