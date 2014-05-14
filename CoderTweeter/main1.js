@@ -22,7 +22,7 @@
     Functions 
         1. Follow method
         2. tweet method
-        3. Login method
+        3. Login method - made an initial log in method
         4. retweet
         5. Somewhere, use a prototype
       
@@ -30,13 +30,16 @@
 */
 //var tweet = document.getElementById().value + 
 
-//An array meant to hold all the usernames for our app 
+//An array meant to hold all the usernames for our app. Right now its holding strings, I need to change that to objects. 
 var allUsers = [];
 allUsers.push("Kyle");
 allUsers.push("Aisha");
 allUsers.push("Christi");
 
-// id's I need to hide- followButton, message, tweetButton, tweetList
+
+
+
+// Hiding user home page elements until they log in
 document.getElementById("followButton").className = "hide";
 document.getElementById("message").className = "hide";
 document.getElementById("tweetButton").className = "hide";
