@@ -37,8 +37,6 @@ allUsers.push("Aisha");
 allUsers.push("Christi");
 
 
-
-
 // Hiding user home page elements until they log in
 document.getElementById("followButton").className = "hide";
 document.getElementById("message").className = "hide";
@@ -76,11 +74,9 @@ myurl = "https://codercamptweeter.firebaseio.com/.json";
 var keyHolder = [];
 
 var NewTweet = function (userName, message) {
-    this["username"] = userName;
+    this["userName"] = userName;
     this["message"] = message;
 };
-
-
 
 var getTweets = function () {
     
@@ -105,18 +101,15 @@ var getTweets = function () {
 
             for (var propName in data) {
                 document.getElementById("container").innerHTML +=
-                data[propName]["name"] + ':' + data[propName]["message"] +  "<br />";
-                data[propName]["name"] + ':' + data[propName]["message"] + "<br />";
-                keyHolder.push(propName["name"], propName["message"]);
+                data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";
+                data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
+                keyHolder.push(propName["userName"], propName["message"]);
             }
-
-
         } else {
             //this is was happens when the request fails
             console.log(this.response);
         }
     };
-
     
     // This lets us know what to do when an error occured.  Either you or the server is offline.
     request.onerror = function () {
@@ -132,7 +125,7 @@ var getTweets = function () {
 var sendTweet = function () {
     //username = this.username;
     message = document.getElementById("message").value;
-    var tweet = NewTweet(userName, message);
+    var tweet = new NewTweet(userName, message);
 
 //    tweet = document.getElementById("message").value;
     var request = new XMLHttpRequest();
@@ -148,6 +141,7 @@ var sendTweet = function () {
             //this is was happens when the request fails
             console.log(this.response);
         }
+        getTweets();
     };
     // This lets us know what to do when an error occured.  Either you or the server is offline.
     request.onerror = function () {
@@ -156,7 +150,7 @@ var sendTweet = function () {
     }
     request.send(JSON.stringify(tweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 
-    getTweets();
+    
 };
 
 document.getElementById("container").innerHTML = keyHolder;
