@@ -67,7 +67,9 @@ var createUser = function (name) {
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
-    allUsers.push(createUser(document.getElementById("signUpName").value));
+    var newUserName = document.getElementById("signUpName").value;
+    var newUser = new createUser(newUserName);
+    allUsers.push(newUser);
 };
 var userName;
 
@@ -79,7 +81,6 @@ document.getElementById("tweetButton").className = "hide";
 document.getElementById("tweetList").className = "hide";
 
 var showHomePage = function () {
-
     var found = false;
     userName = document.getElementById("name").value;
         for (var i = 0; i < allUsers.length; i++) {
