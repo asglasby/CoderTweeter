@@ -1,5 +1,35 @@
 ﻿// https://codercamptweeter.firebaseio.com/
 
+/* 
+    1. show a user and their messages/profile pic
+        a. display log in page
+            1. input text field for username and go button
+                a. Check to see if the userame entered is equal to a username in an array of usernames
+
+        b. Each user would have an object
+            a. properties like name, url, link to their image
+            b. 
+    2. add input for a user to add messages to their feed
+    3. For other users not logged in then only their tweets and follow button
+    4. Make the follow button add their messages to your list of messages.
+
+
+    Chain of information
+    1. array of usernames 
+    2. An object for each user
+    3. Properties - name, url, imagelink
+
+    Functions 
+        1. Follow method
+        2. tweet method
+        3. Login method
+        4. retweet
+        5. Somewhere, use a prototype
+      
+
+*/
+
+
 //var tweet = {
 //    name: "Aisha",
 //    message: "I'm getting this tweet thing going!  Woohoo!"
