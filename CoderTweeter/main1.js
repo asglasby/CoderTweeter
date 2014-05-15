@@ -15,7 +15,7 @@
 
 
     Chain of information
-    1. array of usernames 
+    1. array of allUsers - works
     2. An object for each user
     3. Properties - name, url, imagelink
 
@@ -93,6 +93,7 @@ var showHomePage = function () {
                 document.getElementById("message").className = "";
                 document.getElementById("tweetButton").className = "";
                 document.getElementById("tweetList").className = "";
+                listOtherUsers();
 
                 var startElements = document.getElementsByClassName("startPage");
                 for (var i = 0; i < startElements.length; i++) {
@@ -104,6 +105,7 @@ var showHomePage = function () {
         if (found === false) {
             document.getElementById("contentWrapper").innerHTML += "<p class='startPage'>That account could not be found. Sign up if you have not made an account!</p>";
         }
+        
 };
 
 //var tweet = {
@@ -143,10 +145,8 @@ var getTweets = function () {
 
             for (var propName in data) {
                 if (data[propName]["userName"] === userName) {
-                    document.getElementById("container").innerHTML =
-                    data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";
-                    data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
-                    keyHolder.push(propName["userName"], propName["message"]);
+                    document.getElementById("container").innerHTML +=
+                    data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";                    
                 }
             }
         } else {
@@ -154,18 +154,13 @@ var getTweets = function () {
             console.log(this.response);
         }
     };
-    
-    // This lets us know what to do when an error occured.  Either you or the server is offline.
+     // This lets us know what to do when an error occured.  Either you or the server is offline.
     request.onerror = function () {
         //This on error is for when the connection fails
         console.log("Whoops, connection failed!");
     }
-
-    
     request.send();//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
-
 };
-
 var sendTweet = function () {
     //username = this.username;
     message = document.getElementById("message").value;
@@ -193,8 +188,32 @@ var sendTweet = function () {
         console.log("Whoops, connection failed!");
     }
     request.send(JSON.stringify(tweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+};
 
-    
+var follow = function (nameToFollow) {
+    //for (var propName in data) {
+    //    //get the tweets of the person's username of who we are now following.
+    //    if (data[propName]["userName"] === nameToFollow) {
+    //        document.getElementById("container").innerHTML +=
+    //        data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
+    //        keyHolder.push(propName["userName"], propName["message"]);
+    //    }
+    //}
+    alert("This function is not working yet!");
 };
 
 document.getElementById("container").innerHTML = keyHolder;
+
+//create a list of twitter users that are being passed from the firebase database. onclick will bring us to there start page without there tweets.  Once we click to follow those that person id of person clicked gets passed to nameToFollow.
+
+var currentUser = userName;
+//document.getElementById("follow1").innerHTML = 
+
+var listOtherUsers = function () {
+    document.getElementById("otherUsersTitle").innerHTML = "<h3>Other Twitter Users</h3><br />";               
+
+    for (var i = 0; i < allUsers.length; i++) {
+        document.getElementById("otherusers").innerHTML += allUsers[i]["name"] + "<br />";
+    }
+};
+

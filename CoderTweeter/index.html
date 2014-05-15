@@ -6,7 +6,7 @@
     
 </head>
 <body>
-    <h1 id="header">Aisha, Christi, and Kyle's Coder Camp Tweeter Application</h1><button id="followButton" onclick="follow();">Follow</button>
+    <h1 id="header">Aisha, Christi, and Kyle's Coder Camp Tweeter Application</h1>
     <div id="contentWrapper">
         <input id="name" class="startPage" placeholder="Enter your name or Sign In" />
         <button id="loginButton" class="startPage" onclick="showHomePage();">Log in</button>
@@ -14,6 +14,11 @@
         <button id="signUpButton" class="startPage" onclick="signUp();">sign up</button>
         <textarea id="message" placeholder="Enter your tweet here"></textarea>
         <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
+        <button id="followButton" onclick="follow();">Follow</button>
+    </div>
+    <div>
+        <h3 id="otherUsersTitle"></h3>
+        <p id="otherusers"></p>
     </div>
     <h2 id="tweetList">My Tweets from Coder Camp Tweeter Server</h2>
     <p id="container"></p>
