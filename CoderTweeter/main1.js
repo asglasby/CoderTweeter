@@ -27,7 +27,7 @@
         4. retweet
         5. Somewhere, use a prototype
      
-     still to do- follow, retweet, filter tweets
+     still to do- follow, retweet, 
 
 */
 //var tweet = document.getElementById().value + 
@@ -48,7 +48,12 @@ var Christi = {
 
 allUsers.push(Kyle, Aisha, Christi);
 */
+
+var userName;
 var allUsers = [];
+myurl = "https://codercamptweeter.firebaseio.com/.json";
+var keyHolder = [];
+
 var Kyle = {
     name: "Kyle"
 };
@@ -63,17 +68,17 @@ allUsers.push(Kyle, Aisha, Christi)
 
 
 //create a user constructor that will create users as objects
-var createUser = function (name) {
+var CreateUser = function (name) {
     this.name = name;
 };
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
     var newUserName = document.getElementById("signUpName").value;
-    var newUser = new createUser(newUserName);
+    var newUser = new CreateUser(newUserName);
     allUsers.push(newUser);
 };
-var userName;
+
 
 
 // Hiding user home page elements until they log in
@@ -110,14 +115,6 @@ var showHomePage = function () {
         
 };
 
-//var tweet = {
-//    name: "Aisha",
-//    message: "I'm Working with Kyle and Christi!"
-//}
-//var tweet = document.getElementById().value + 
-
-myurl = "https://codercamptweeter.firebaseio.com/.json";
-var keyHolder = [];
 
 var NewTweet = function (userName, message) {
     this["userName"] = userName;
