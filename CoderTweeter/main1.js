@@ -206,7 +206,7 @@ var follow = function () {
         //checkFollowersList();
         //getTweets();
         ////get your tweets the person you are now following
-        //getCombinedTweets();
+        getCombinedTweets();
 };
 //create a list of twitter users that are being passed from the firebase database. onclick will bring us to there start page without there tweets.  Once we click to follow those that person id of person clicked gets passed to nameToFollow.
 
