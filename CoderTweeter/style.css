@@ -5,3 +5,21 @@
     display: none;
 }
 
+.retweet {
+    width: 20px;
+    height: 20px;
+}
+
+.tweet {
+    width: 400px;
+    height: 50px;
+    text-align: center;
+    background-color: white;
+}
+
+.tweet:hover {
+    transition: background-color ease-in 2s;
+    background-color: black;
+    transition: color linear 2s;
+    color: white;
+}

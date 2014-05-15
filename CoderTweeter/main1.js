@@ -95,10 +95,12 @@ var showHomePage = function () {
                 document.getElementById("tweetList").className = "";
                 listOtherUsers();
 
+                
                 var startElements = document.getElementsByClassName("startPage");
                 for (var i = 0; i < startElements.length; i++) {
                     startElements[i].style.display = "none";
                 }
+                getTweets();
                 found = true;
             }
         }
@@ -124,6 +126,7 @@ var NewTweet = function (userName, message) {
 
 var getTweets = function () {
     
+    document.getElementById("container").innerHTML = "";
     var request = new XMLHttpRequest();
     
     request.open("GET", myurl, true); // Post will send the information to firebase
@@ -144,17 +147,22 @@ var getTweets = function () {
             //alert(keyHolder);
 
             for (var propName in data) {
+                //retweet
                 if (data[propName]["userName"] === userName) {
-                    document.getElementById("container").innerHTML +=
-                    data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";                    
+
+                //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
+                    document.getElementById("container").innerHTML += "<div class='tweet'> " + 
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
+                    keyHolder.push(propName["userName"], propName["message"]);
                 }
+                //to retweet, set a counter that gives an id to the div. Get the 
             }
         } else {
             //this is was happens when the request fails
             console.log(this.response);
         }
     };
-     // This lets us know what to do when an error occured.  Either you or the server is offline.
+    // This lets us know what to do when an error occured.  Either you or the server is offline.
     request.onerror = function () {
         //This on error is for when the connection fails
         console.log("Whoops, connection failed!");
@@ -201,7 +209,7 @@ var follow = function (nameToFollow) {
     //}
     alert("This function is not working yet!");
 };
-
+    
 document.getElementById("container").innerHTML = keyHolder;
 
 //create a list of twitter users that are being passed from the firebase database. onclick will bring us to there start page without there tweets.  Once we click to follow those that person id of person clicked gets passed to nameToFollow.
