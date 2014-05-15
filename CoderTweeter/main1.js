@@ -199,6 +199,12 @@ var follow = function () {
     for (var i = 0; i < startElements.length; i++) {
         startElements[i].style.display = "none";
     }
+
+
+    ///////////////////////////////////////////////////////////will work on tomorrow add follower's list and get tweets of all followers
+    newFollower = userName;
+    checkFollowersList();
+    getTweets();
     //get your tweets the person you are now following
     getCombinedTweets();
 };
