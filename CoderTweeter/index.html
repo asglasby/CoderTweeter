@@ -12,8 +12,10 @@
         <button id="loginButton" class="startPage" onclick="showHomePage();">Log in</button>
         <input id="signUpName" class="startPage" placeholder="sign up here" />
         <button id="signUpButton" class="startPage" onclick="signUp();">sign up</button>
-        <textarea id="message" placeholder="Enter your tweet here"></textarea>
-        <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
+        <div id="tweetBox">
+            <textarea id="message" placeholder="Enter your tweet here"></textarea>
+            <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
+        </div>  
         <button id="followButton" onclick="follow();">Follow</button>
     </div>
     <div>
