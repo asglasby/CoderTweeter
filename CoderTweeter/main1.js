@@ -94,10 +94,12 @@ var showHomePage = function () {
                 document.getElementById("tweetButton").className = "";
                 document.getElementById("tweetList").className = "";
 
+                
                 var startElements = document.getElementsByClassName("startPage");
                 for (var i = 0; i < startElements.length; i++) {
                     startElements[i].style.display = "none";
                 }
+                getTweets();
                 found = true;
             }
         }
@@ -122,6 +124,7 @@ var NewTweet = function (userName, message) {
 
 var getTweets = function () {
     
+    document.getElementById("container").innerHTML = "";
     var request = new XMLHttpRequest();
     
     request.open("GET", myurl, true); // Post will send the information to firebase
@@ -142,12 +145,15 @@ var getTweets = function () {
             //alert(keyHolder);
 
             for (var propName in data) {
+                //retweet
                 if (data[propName]["userName"] === userName) {
-                    document.getElementById("container").innerHTML =
-                    data[propName]["userName"] + ':' + data[propName]["message"] +  "<br />";
-                    data[propName]["userName"] + ':' + data[propName]["message"] + "<br />";
+
+                //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
+                    document.getElementById("container").innerHTML += "<div class='tweet'> " + 
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
                     keyHolder.push(propName["userName"], propName["message"]);
                 }
+                //to retweet, set a counter that gives an id to the div. Get the 
             }
         } else {
             //this is was happens when the request fails
@@ -194,7 +200,10 @@ var sendTweet = function () {
     }
     request.send(JSON.stringify(tweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 
-    
+
 };
 
 document.getElementById("container").innerHTML = keyHolder;
+
+
+
