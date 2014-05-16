@@ -52,7 +52,6 @@ allUsers.push(Kyle, Aisha, Christi);
 var userName;
 var allUsers = [];
 var myurl = "https://codercamptweeter.firebaseio.com/.json";
-//var keyHolder = [];
 var loggedInUser = "";
 
 var Kyle = {
@@ -125,6 +124,9 @@ var NewTweet = function (userName, message) {
     this["message"] = message;
     this["originalAuthor"] = userName;
 };
+
+//This array will be used to store new tweets that will be sent to the Firebase server from the array.
+var newTweetArray = [];
 
     
 // This function will pull the tweets from the Firebase server.
@@ -199,10 +201,16 @@ var reTweet = function (tweetToRetweet) {
 var sendTweet = function () {
     "use strict";
     //username = this.username;
-    message = document.getElementById("message").value;
+    var message = document.getElementById("message").value;
     var tweet = new NewTweet(userName, message);
 
-   // tweet = document.getElementById("message").value;
+    //this will later be pulled out to store and send all new tweets instead of using session storage for new tweets.
+    newTweetArray.push(tweet);
+    sendTweetPost();
+};
+
+var sendTweetPost = function () {
+    // tweet = document.getElementById("message").value;
     var request = new XMLHttpRequest();
     request.open("POST", myurl, true); // Post will send the information to firebase
 
@@ -223,8 +231,12 @@ var sendTweet = function () {
         //This on error is for when the connection fails
         console.log("Whoops, connection failed!");
     }
-    request.send(JSON.stringify(tweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+    request.send(JSON.stringify(newTweetArray));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+
 };
+   
+
+
 
 var follow = function () {
     "use strict";
@@ -272,7 +284,7 @@ var otherUserPage = function (usrId) {
 
 var getCombinedTweets = function () {
     "use strict";
-    //document.getElementById("container").innerHTML = "";
+    
     var request = new XMLHttpRequest();
     
     request.open("GET", myurl, true); // Post will send the information to firebase
