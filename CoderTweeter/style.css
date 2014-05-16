@@ -1,6 +1,14 @@
-﻿body {
+body {
     background-image: url(images/Bubbles.png);
 }
+
+.group:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+	}
 
 #header {
     text-align: center;
@@ -8,7 +16,7 @@
 }
 
 #contentWrapper {
-    height: 600px;
+    /* height: 600px; */
     width: 80%;
 }
 
@@ -50,6 +58,7 @@
 #name {
     position: relative;
     left: 48%;
+	top: 200px;
     bottom: -50%;
     width: 300px;
     height: 40px;
@@ -58,9 +67,9 @@
 
 #loginButton {
     width: 200px;
-    position: relative;
     height: 40px;
-    top: 60%;
+	position: relative;
+    top: 250px;
     left: 24%;
 }
 
@@ -69,13 +78,13 @@
     height: 40px;
     width: 300px;
     position: relative;
-    top: 30%;
+    top: 80px;
 }
 
 #signUpButton {
     position: relative;
     left: -24%;
-    top: 40%;
+    top: 130px;
     width: 200px;
     height: 40px;
 }
