@@ -65,6 +65,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\Bubbles.png" />
+    <Content Include="images\meerkat.jpg" />
     <Content Include="dateTime.js" />
     <Content Include="images\retweet.jpg" />
     <Content Include="index.html" />
