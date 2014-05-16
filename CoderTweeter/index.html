@@ -8,27 +8,26 @@
 <body>
     <h1 id="header">Aisha, Christi, and Kyle's Coder Camp Tweeter Application</h1>
     <div id="contentWrapper">
+        <!------------------------------Start page----------------------------------->
         <input id="name" class="startPage" placeholder="Enter your name or Sign In" />
         <button id="loginButton" class="startPage" onclick="showHomePage();">Log in</button>
         <input id="signUpName" class="startPage" placeholder="sign up here" />
         <button id="signUpButton" class="startPage" onclick="signUp();">sign up</button>
+        <!-----------------------------User Home Page------------------------------------->
         <div id="tweetBox">
-        <textarea id="message" placeholder="Enter your tweet here"></textarea>
-        <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
+            <textarea id="message" placeholder="Enter your tweet here"></textarea>
+            <button id="tweetButton" onclick="sendTweet();">Send Tweet</button>
         </div>
         <div id="followdiv">
-        <button id="followButton" onclick="follow();">Follow</button>
-        
+            <button id="followButton" onclick="follow();">Follow</button>
+        </div>  
+        <div id="otherUsers">
+            <ol id="otherUsersTitle"></ol>
+            <p id="otherusers"></p>
+        </div>
         <h2 id="tweetList">My Tweets from Coder Camp Tweeter Server</h2>
-        <div id="tweets"></div>
-    <div>
-        <ol id="otherUsersTitle"></ol>
-        <p id="otherusers"></p>
+        <p id="container"></p>
     </div>
-        
-    </div>
-
-    
     <script src="main1.js"></script>
 </body>
 </html>
