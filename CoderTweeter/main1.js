@@ -26,11 +26,11 @@
     3. Properties - name, url, imagelink
 
     Functions 
-        1. Follow method
+        1. Follow method - works
         2. tweet method - works
         3. Login method - works
         4. sign up method - works
-        4. retweet
+        4. retweet - works
         5. Somewhere, use a prototype
      
       Tasks 
@@ -154,8 +154,7 @@ var NewTweet = function (userName, message, result) {
 };
 
 //This array will be used to store new tweets that will be sent to the Firebase server from the array.
-var newTweetArray = [];
-    
+var newTweetArray = [];    
     
 // This function will pull the tweets from the Firebase server.
 var getTweets = function () {
