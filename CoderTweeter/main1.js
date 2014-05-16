@@ -118,11 +118,12 @@ var showHomePage = function () {
 };
 
 //This is the New Tweet Constructor for the tweets.
-var NewTweet = function (userName, message) {
+var NewTweet = function (userName, message, result) {
     "use strict";
     this["userName"] = userName;
     this["message"] = message;
     this["originalAuthor"] = userName;
+    this["timeStamp"] = result;
 };
 
 //This array will be used to store new tweets that will be sent to the Firebase server from the array.
@@ -200,17 +201,21 @@ var reTweet = function (tweetToRetweet) {
 
 var sendTweet = function () {
     "use strict";
+    if (!Date.now) {
+        Date.now = function now() {
+            return new Date().getTime();
+        };
+    }
+    var result = Date.now();
+    alert(result);
+
     //username = this.username;
     var message = document.getElementById("message").value;
-    var tweet = new NewTweet(userName, message);
+    var tweet = new NewTweet(userName, message, result);
 
     //this will later be pulled out to store and send all new tweets instead of using session storage for new tweets.
-    newTweetArray.push(tweet);
-    sendTweetPost();
-};
+    var arrayCounter;
 
-var sendTweetPost = function () {
-    // tweet = document.getElementById("message").value;
     var request = new XMLHttpRequest();
     request.open("POST", myurl, true); // Post will send the information to firebase
 
@@ -231,13 +236,40 @@ var sendTweetPost = function () {
         //This on error is for when the connection fails
         console.log("Whoops, connection failed!");
     }
-    request.send(JSON.stringify(newTweetArray));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+    request.send(JSON.stringify(tweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 
+    newTweetArray.push(tweet);
+    //alert(JSON.stringify(newTweetArray));
+    //sendTweetPost();
 };
+
+//var sendTweetPost = function () {
+//    "use strict";
+    
+//    var request = new XMLHttpRequest();
+//    request.open("POST", myurl, true); // Post will send the information to firebase
+
+//    // the onload is what we want to happen when the request comes base from firebase.
+//    request.onload = function (event) {
+//        if (this.status >= 200 && this.status < 400) {
+//            //this is what happens when our request is successful later.
+//            var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
+//            console.log(data);
+//        } else {
+//            //this is was happens when the request fails
+//            console.log(this.response);
+//        }
+//        getTweets();
+//    };
+//    // This lets us know what to do when an error occured.  Either you or the server is offline.
+//    request.onerror = function () {
+//        //This on error is for when the connection fails
+//        console.log("Whoops, connection failed!");
+//    }
+//    request.send(JSON.stringify(newTweetArray));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+
+//};
    
-
-
-
 var follow = function () {
     "use strict";
     document.getElementById("container").innerHTML = "";
