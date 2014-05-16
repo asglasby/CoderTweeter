@@ -26,7 +26,7 @@
         2. tweet method - works
         3. Login method - works
         4. sign up method - works
-        4. retweet - works
+        4. retweet
         5. Somewhere, use a prototype
      
       Tasks 
@@ -34,6 +34,26 @@
         -add a prototype for user constructor so each user has a default profile pic
         -add css
         -
+     still to do- follow, retweet, 
+
+*/
+//var tweet = document.getElementById().value + 
+
+//An array meant to hold all the usernames for our app. Right now its holding strings, I need to change that to objects. 
+/*
+var allUsers = [];
+
+var Kyle = {
+    name: "Kyle"
+};
+var Aisha = {
+    name: "Aisha""
+};
+var Christi = {
+    name: "Christi"
+};
+
+allUsers.push(Kyle, Aisha, Christi);
 */
 
 var userName;
@@ -61,10 +81,6 @@ var Christi = {
 
 allUsers.push(Kyle, Aisha, Christi)
 
-allUsersObject["Kyle"] = Kyle;
-allUsersObject["Aisha"] = Aisha;
-allUsersObject["Christi"] = Christi;
-
 //create a user constructor that will create users as objects
 var userPrototype = {
     image: 'images/meerkat.jpg',
@@ -79,9 +95,8 @@ var CreateUser = function (name) {
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
-    document.getElementById("name").focus();
+    "use strict";
     var newUserName = document.getElementById("signUpName").value;
-    document.getElementById("signUpName").value = "";
     var newUser = new CreateUser(newUserName);
     allUsers.push(newUser);
 };
@@ -91,6 +106,9 @@ document.getElementById("followButton").className = "hide";
 document.getElementById("message").className = "hide";
 document.getElementById("tweetButton").className = "hide";
 document.getElementById("tweetList").className = "hide";
+document.getElementById("otherUsers").className = "hide";
+document.getElementById("tweetBox").className = "hide";
+document.getElementById("followdiv").className = "hide";
 
 // After the user has logged in the Home Page will load with all the available buttons and features
 var showHomePage = function () {
@@ -105,6 +123,8 @@ var showHomePage = function () {
                 document.getElementById("message").className = "";
                 document.getElementById("tweetButton").className = "";
                 document.getElementById("tweetList").className = "";
+                document.getElementById("otherUsers").className = "";
+                document.getElementById("tweetBox").className = "";
                 listOtherUsers();
                 
                 var startElements = document.getElementsByClassName("startPage");
@@ -135,8 +155,8 @@ var newTweetArray = [];
     
 // This function will pull the tweets from the Firebase server.
 var getTweets = function () {
-    
-    document.getElementById("tweets").innerHTML = "";
+    "use strict";
+    document.getElementById("container").innerHTML = "";
     var request = new XMLHttpRequest();
     
     // Get will send the information to firebase
@@ -154,8 +174,8 @@ var getTweets = function () {
             for (var propName in data) {
                 if (data[propName]["userName"] === userName) {
                 //We are being given an object of objects. 
-                    document.getElementById("tweets").innerHTML += "<div class='tweet'><img class='images' src=" + allUsersObject[userName]["image"] + " /> " +
-                    data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<button onclick='reTweet(" + JSON.stringify(data[propName]) + ");'>Retweet</button>" + "<br /></div>";
+                    document.getElementById("container").innerHTML += "<div class='tweet'> " + 
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<button onclick='reTweet(" + JSON.stringify(data[propName]) + ");'>Retweet</button>" + "<br /></div>";
                     //keyHolder.push(propName["userName"], propName["message"]);
                 }
             }
@@ -173,24 +193,33 @@ var getTweets = function () {
 };
 
 
+//to retweet, I could make another sendTweet call. I need to pass it the object and add it an original author property
+
 var reTweet = function (tweetToRetweet) {
+
     tweetToRetweet["userName"] = loggedInUser;
 
     var request = new XMLHttpRequest();
-    request.open("POST", myurl, true); 
+    request.open("POST", myurl, true); // Post will send the information to firebase
+
+    //the onload is what we want to happen when the request comes base from firebase.
     request.onload = function (event) {
         if (this.status >= 200 && this.status < 400) {
-            var data = JSON.parse(this.response); 
+            //this is what happens when our request is successful later.
+            var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
             console.log(data);
         } else {
+            //this is was happens when the request fails
             console.log(this.response);
         }
         getTweets();
     };
+    // This lets us know what to do when an error occured.  Either you or the server is offline.
     request.onerror = function () {
+        //This on error is for when the connection fails
         console.log("Whoops, connection failed!");
     }
-    request.send(JSON.stringify(tweetToRetweet));
+    request.send(JSON.stringify(tweetToRetweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 };
 
 var sendTweet = function () {
@@ -296,6 +325,7 @@ var listOtherUsers = function () {
 
 var otherUserPage = function (usrId) {
     "use strict";
+    document.getElementById("followdiv").className = "";
     userName = document.getElementById(usrId).innerHTML;
     document.getElementById("header").innerHTML = "Welcome to " + userName + "'s page, " + loggedInUser + " is still logged in.";
     var startElements = document.getElementsByClassName("startPage");
@@ -321,11 +351,8 @@ var getCombinedTweets = function () {
             userName = loggedInUser;            
             for (var propName in data) {            
                 if (data[propName]["userName"] === userName) {
-
-                    //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
-                    document.getElementById("tweets").innerHTML += "<div class='tweet'> " + 
-                    data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
-                    //keyHolder.push(propName["userName"], propName["message"]);
+                    document.getElementById("container").innerHTML += "<div class='tweet'> " + 
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";                    
                 }
             }
             var counter = 0;
@@ -337,11 +364,6 @@ var getCombinedTweets = function () {
                         userName = allUsers[counter].followers[followerCounter];
                         for (var propName in data) {
                             if (data[propName]["userName"] === userName) {
-
-                    //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
-                    document.getElementById("tweets").innerHTML += "<div class='tweet'> " +
-                    data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
-                    //keyHolder.push(propName["userName"], propName["message"]);
                                 document.getElementById("container").innerHTML += "<div class='tweet'> " +
                                 data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
                             }
