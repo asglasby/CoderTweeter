@@ -1,7 +1,6 @@
 ﻿"use strict";
 
 /* 
-
     document.getElementById("divtoinsertimage").innerhtml += "<img src='images/stuff
 
     1. show a user and their messages/profile pic
@@ -35,35 +34,29 @@
         -add a prototype for user constructor so each user has a default profile pic
         -add css
         -
-
-
 */
-
 
 var userName;
 var allUsers = [];
-allUsersObject = {};
-myurl = "https://codercamptweeter.firebaseio.com/.json";
+var allUsersObject = {};
+var myurl = "https://codercamptweeter.firebaseio.com/.json";
 //var keyHolder = [];
 var loggedInUser = "";
 
 var Kyle = {
     name: "Kyle",
-    image: "images/meerkat.jpg"
-    name: "Kyle",
+    image: "images/meerkat.jpg",
     followers:[]
 };
 var Aisha = {
     name: "Aisha",
-    image: "images/meerkat.jpg"
-    name: "Aisha",
+    image: "images/meerkat.jpg",
     followers:[]
 };
 var Christi = {
     name: "Christi",
-    image: "images/meerkat.jpg"
-    name: "Christi",
-    followers: []
+    image: "images/meerkat.jpg",
+    followers:[]
 };
 
 allUsers.push(Kyle, Aisha, Christi)
@@ -75,7 +68,6 @@ allUsersObject["Christi"] = Christi;
 //create a user constructor that will create users as objects
 var userPrototype = {
     image: 'images/meerkat.jpg',
-
 };
 
 var CreateUser = function (name) {
@@ -83,11 +75,7 @@ var CreateUser = function (name) {
     this.name = name;
     allUsersObject[name] = name;
     image: "images/meerkat.jpg";
-
 };
-
-
-
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
@@ -213,7 +201,6 @@ var sendTweet = function () {
         };
     }
     var result = Date.now();
-    alert(result);
 
     //username = this.username;
     var message = document.getElementById("message").value;
