@@ -1,4 +1,4 @@
-﻿// https://codercamptweeter.firebaseio.com/
+﻿"use strict";
 
 /* 
     1. show a user and their messages/profile pic
@@ -51,7 +51,7 @@ allUsers.push(Kyle, Aisha, Christi);
 
 var userName;
 var allUsers = [];
-myurl = "https://codercamptweeter.firebaseio.com/.json";
+var myurl = "https://codercamptweeter.firebaseio.com/.json";
 //var keyHolder = [];
 var loggedInUser = "";
 
@@ -72,11 +72,13 @@ allUsers.push(Kyle, Aisha, Christi)
 
 //create a user constructor that will create users as objects
 var CreateUser = function (name) {
+    "use strict";
     this.name = name;
 };
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
+    "use strict";
     var newUserName = document.getElementById("signUpName").value;
     var newUser = new CreateUser(newUserName);
     allUsers.push(newUser);
@@ -90,6 +92,7 @@ document.getElementById("tweetList").className = "hide";
 
 // After the user has logged in the Home Page will load with all the available buttons and features
 var showHomePage = function () {
+    "use strict";
     var found = false;
     userName = document.getElementById("name").value;
     loggedInUser = userName;
@@ -112,18 +115,21 @@ var showHomePage = function () {
         }
         if (found === false) {
             document.getElementById("contentWrapper").innerHTML += "<p class='startPage'>That account could not be found. Sign up if you have not made an account!</p>";
-        }     
+        }
 };
 
 //This is the New Tweet Constructor for the tweets.
 var NewTweet = function (userName, message) {
+    "use strict";
     this["userName"] = userName;
     this["message"] = message;
+    this["originalAuthor"] = userName;
 };
 
-
+    
 // This function will pull the tweets from the Firebase server.
 var getTweets = function () {
+    "use strict";
     document.getElementById("container").innerHTML = "";
     var request = new XMLHttpRequest();
     
@@ -139,24 +145,13 @@ var getTweets = function () {
             //console.log(data);
             //This is what we want to happen when the request is successful.
             //document.getElementById("container").innerHTML = JSON.stringify(data);  // we need to unpack the data that's inside of an object or array.
-
-            //for (var propName in data) {
-            //    document.getElementById("container").innerHTML += propName + "<br />";
-            //    keyHolder.push(propName);
-
-            //}
-            //alert(keyHolder);
-
             for (var propName in data) {
-                //retweet
                 if (data[propName]["userName"] === userName) {
-
-                //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
+                //We are being given an object of objects. 
                     document.getElementById("container").innerHTML += "<div class='tweet'> " + 
-                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<button onclick='reTweet(" + JSON.stringify(data[propName]) + ");'>Retweet</button>" + "<br /></div>";
                     //keyHolder.push(propName["userName"], propName["message"]);
                 }
-                //to retweet, set a counter that gives an id to the div. Get the 
             }
         } else {
             //this is was happens when the request fails
@@ -170,7 +165,39 @@ var getTweets = function () {
     }
     request.send();//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 };
+
+
+//to retweet, I could make another sendTweet call. I need to pass it the object and add it an original author property
+
+var reTweet = function (tweetToRetweet) {
+
+    tweetToRetweet["userName"] = loggedInUser;
+
+    var request = new XMLHttpRequest();
+    request.open("POST", myurl, true); // Post will send the information to firebase
+
+    //the onload is what we want to happen when the request comes base from firebase.
+    request.onload = function (event) {
+        if (this.status >= 200 && this.status < 400) {
+            //this is what happens when our request is successful later.
+            var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
+            console.log(data);
+        } else {
+            //this is was happens when the request fails
+            console.log(this.response);
+        }
+        getTweets();
+    };
+    // This lets us know what to do when an error occured.  Either you or the server is offline.
+    request.onerror = function () {
+        //This on error is for when the connection fails
+        console.log("Whoops, connection failed!");
+    }
+    request.send(JSON.stringify(tweetToRetweet));//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
+};
+
 var sendTweet = function () {
+    "use strict";
     //username = this.username;
     message = document.getElementById("message").value;
     var tweet = new NewTweet(userName, message);
@@ -200,27 +227,27 @@ var sendTweet = function () {
 };
 
 var follow = function () {
-
+    "use strict";
+    document.getElementById("container").innerHTML = "";
     for(var j = 0; j < allUsers.length; j++){
-        if (loggedInUser == allUsers[j]);
-        allUsers[j].followers.push(userName);
+        if (loggedInUser == allUsers[j]["name"]) {
+            allUsers[j].followers.push(userName);
+        }      
     }
     document.getElementById("header").innerHTML = loggedInUser + "'s Tweeter, Page";
     var startElements = document.getElementsByClassName("startPage");
     for (var i = 0; i < startElements.length; i++) {
         startElements[i].style.display = "none";
     }
-    ///////////////////////////////////////////////////////////will work on tomorrow add follower's list and get tweets of all followers
-        //newFollower = userName;
-        //checkFollowersList();
-        //getTweets();
-        ////get your tweets the person you are now following
-        getCombinedTweets();
+    document.getElementById("followdiv").innerHTML = "";
+    //getTweets();
+    getCombinedTweets();
 };
-//create a list of twitter users that are being passed from the firebase database. onclick will bring us to there start page without there tweets.  Once we click to follow those that person id of person clicked gets passed to nameToFollow.
 
-//This function will list the other users
+//This function will list the other users on or firebase database.  
+///*******************will adjust the code to only list people we are not following
 var listOtherUsers = function () {
+    "use strict";
     document.getElementById("otherUsersTitle").innerHTML = "Other Twitter Users";               
 
     for (var i = 0; i < allUsers.length; i++) {
@@ -231,6 +258,7 @@ var listOtherUsers = function () {
 };
 
 var otherUserPage = function (usrId) {
+    "use strict";
     userName = document.getElementById(usrId).innerHTML;
     document.getElementById("header").innerHTML = "Welcome to " + userName + "'s page, " + loggedInUser + " is still logged in.";
     var startElements = document.getElementsByClassName("startPage");
@@ -238,11 +266,12 @@ var otherUserPage = function (usrId) {
         startElements[i].style.display = "none";
     }
     document.getElementById("tweetBox").innerHTML = "";
-    alert("Click the Follow button to follow " + userName);
+    document.getElementById("followdiv").innerHTML = '<button id="followButton" onclick="follow();">Follow</button>';
     getTweets();
 };
 
 var getCombinedTweets = function () {
+    "use strict";
     //document.getElementById("container").innerHTML = "";
     var request = new XMLHttpRequest();
     
@@ -250,39 +279,32 @@ var getCombinedTweets = function () {
     //the onload is what we want to happen when the request comes base from firebase.
     request.onload = function (event) {
         if (this.status >= 200 && this.status < 400) {
-            //this is what happens when our request is successfullater.
+            //this is what happens later if our request is successful.
             var data = JSON.parse(this.response); //this will parse my response which will be a key that will be retuned as an object, which can be used.  The key is letting me know how to access my key later.
-            //console.log(data);
-            //This is what we want to happen when the request is successful.
-            //document.getElementById("container").innerHTML = JSON.stringify(data);  // we need to unpack the data that's inside of an object or array.
-
-            //for (var propName in data) {
-            //    document.getElementById("container").innerHTML += propName + "<br />";
-            //    keyHolder.push(propName);
-
-            //}
-            //alert(keyHolder);
-            userName = loggedInUser;
-            for (var propName in data) {
-                //retweet
+            userName = loggedInUser;            
+            for (var propName in data) {            
                 if (data[propName]["userName"] === userName) {
-
-                    //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
                     document.getElementById("container").innerHTML += "<div class='tweet'> " + 
-                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";                
+                    data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";                    
                 }
-
-                for (var l = 0; l < allUsers.length; l++) {
-                    if (userName == allUsers[l]) {
-                        if (allUsers[l].followers.length > 0) {
-                            for (var k = 0; k < allUsers[l].followers.length; k++) {
-                                userName = allUsers[l].followers[k];
+            }
+            var counter = 0;
+            while (counter < allUsers.length) {
+                if (userName == allUsers[counter]["name"] && allUsers[counter].followers.length > 0){                
+                    var followerCounter = 0;
+                    var myFollowers = allUsers[counter].followers.length;
+                    while (followerCounter < myFollowers) {
+                        userName = allUsers[counter].followers[followerCounter];
+                        for (var propName in data) {
+                            if (data[propName]["userName"] === userName) {
                                 document.getElementById("container").innerHTML += "<div class='tweet'> " +
-                        data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
+                                data[propName]["userName"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
                             }
                         }
+                        followerCounter++
                     }
                 }
+                counter++;
             }
         } else {
             //this is was happens when the request fails
@@ -296,6 +318,3 @@ var getCombinedTweets = function () {
     }
     request.send();//what ever is put inside send is posted to the server.  Since our tweet is an object, the JSON stringify will turn it into a string.  If whatever we are sending is already a string, we do not need to JSON.stringify it.
 };
-
-
-
