@@ -119,6 +119,7 @@ h2 {
     position: relative;
     top: 40px;
     left: 43%;
+    margin-top: 10px;
 }
 
 .tweet:hover {

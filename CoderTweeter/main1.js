@@ -1,6 +1,10 @@
 ﻿"use strict";
 
 /* 
+    Bugs - Follow button needs css
+         - sign up button is gone in Aisha's computer
+
+
     document.getElementById("divtoinsertimage").innerhtml += "<img src='images/stuff
 
     1. show a user and their messages/profile pic
