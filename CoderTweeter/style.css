@@ -1,8 +1,64 @@
 ﻿body {
+    background-image: url(images/Bubbles.png);
 }
+
+#header {
+    text-align: center;
+    font-family: Impact;
+}
+
+#contentWrapper {
+    height: 600px;
+    width: 80%;
+}
+
+
+#name {
+    position: relative;
+    left: 48%;
+    bottom: -50%;
+    width: 300px;
+    height: 40px;
+    font-family: "Courier New", Georgia, "Times New Roman";
+}
+
+#loginButton {
+    width: 200px;
+    position: relative;
+    height: 40px;
+    top: 60%;
+    left: 24%;
+}
+
+
+#signUpName {
+    height: 40px;
+    width: 300px;
+    position: relative;
+    top: 30%;
+}
+
+#signUpButton {
+    position: relative;
+    left: -24%;
+    top: 40%;
+    width: 200px;
+    height: 40px;
+}
+
 
 .hide {
     display: none;
+}
+
+h2 {
+    position: relative;
+    left: 30%;
+}
+
+#tweets{
+    position: relative;
+    left: 30%
 }
 
 .retweet {
@@ -15,11 +71,13 @@
     height: 50px;
     text-align: center;
     background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
 }
 
 .tweet:hover {
     transition: background-color ease-in 2s;
-    background-color: black;
+    background-color: #0096B2;
     transition: color linear 2s;
     color: white;
 }

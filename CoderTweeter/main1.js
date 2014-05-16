@@ -1,6 +1,9 @@
 ﻿// https://codercamptweeter.firebaseio.com/
 
 /* 
+
+    document.getElementById("divtoinsertimage").innerhtml += "<img src='images/stuff
+
     1. show a user and their messages/profile pic
         a. display log in page
             1. input text field for username and go button
@@ -64,23 +67,26 @@ allUsersObject["Aisha"] = Aisha;
 allUsersObject["Christi"] = Christi;
 
 //create a user constructor that will create users as objects
+var userPrototype = {
+    image: 'images/meerkat.jpg',
 
+};
 
 var CreateUser = function (name) {
     this.name = name;
     allUsersObject[name] = name;
+    image: "images/meerkat.jpg";
+
 };
 
-var userPrototype = {
-    image: 'images/meerkat.jpg'
-};
 
 
-CreateUser.prototype = userPrototype;
 
 //create a signup function that calls the createUser constructor and pushes it to the array
 var signUp = function () {
+    document.getElementById("name").focus();
     var newUserName = document.getElementById("signUpName").value;
+    document.getElementById("signUpName").value = "";
     var newUser = new CreateUser(newUserName);
     allUsers.push(newUser);
 };
@@ -129,7 +135,7 @@ var NewTweet = function (userName, message) {
 
 var getTweets = function () {
     
-    document.getElementById("container").innerHTML = "";
+    document.getElementById("tweets").innerHTML = "";
     var request = new XMLHttpRequest();
     
     request.open("GET", myurl, true); // Post will send the information to firebase
@@ -142,7 +148,7 @@ var getTweets = function () {
             for (var propName in data) {
                 if (data[propName]["userName"] === userName) {
                 //We are being given an object of objects. 
-                    document.getElementById("container").innerHTML += "<div class='tweet'><img class='images' src=" + allUsersObject[userName]["image"] + " /> " +
+                    document.getElementById("tweets").innerHTML += "<div class='tweet'><img class='images' src=" + allUsersObject[userName]["image"] + " /> " +
                     data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<button onclick='reTweet(" + JSON.stringify(data[propName]) + ");'>Retweet</button>" + "<br /></div>";
                     //keyHolder.push(propName["userName"], propName["message"]);
                 }
@@ -254,7 +260,7 @@ var otherUserPage = function (usrId) {
 };
 
 var getCombinedTweets = function () {
-    //document.getElementById("container").innerHTML = "";
+    //document.getElementById("contentWrapper").innerHTML = "";
     var request = new XMLHttpRequest();
     
     request.open("GET", myurl, true); // Post will send the information to firebase
@@ -269,7 +275,7 @@ var getCombinedTweets = function () {
                 if (data[propName]["userName"] === userName) {
 
                     //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
-                    document.getElementById("container").innerHTML += "<div class='tweet'> " + 
+                    document.getElementById("tweets").innerHTML += "<div class='tweet'> " + 
                     data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
                     //keyHolder.push(propName["userName"], propName["message"]);
                 }
@@ -280,7 +286,7 @@ var getCombinedTweets = function () {
                 if (data[propName]["userName"] === userName) {
 
                     //We are being given an object of objects. If we turn it into an array of objects, we can loop through the array and sort it by time. To sort by time, 
-                    document.getElementById("container").innerHTML += "<div class='tweet'> " +
+                    document.getElementById("tweets").innerHTML += "<div class='tweet'> " +
                     data[propName]["originalAuthor"] + ':' + data[propName]["message"] + "<img class='retweet' src='images/retweet.jpg'/>" + "<br /></div>";
                     //keyHolder.push(propName["userName"], propName["message"]);
                 }
