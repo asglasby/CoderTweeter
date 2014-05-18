@@ -65,6 +65,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="getCombinedTweets.js" />
+    <Content Include="getTweets.js" />
     <Content Include="images\Bubbles.png" />
     <Content Include="images\meerkat.jpg" />
     <Content Include="dateTime.js" />
